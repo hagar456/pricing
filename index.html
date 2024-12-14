@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة تسعير التركيبات الصيدلانية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            direction: rtl;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>حاسبة تسعير التركيبات الصيدلانية</h1>
+        
+        <div class="form-group">
+            <label for="rawMaterials">تكلفة المواد الخام (بالجنيه)</label>
+            <input type="number" id="rawMaterials" placeholder="أدخل تكلفة المواد الخام">
+        </div>
+        
+        <div class="form-group">
+            <label for="labor">تكلفة العمالة (بالجنيه)</label>
+            <input type="number" id="labor" placeholder="أدخل تكلفة العمالة">
+        </div>
+        
+        <div class="form-group">
+            <label for="packaging">تكلفة التعبئة (بالجنيه)</label>
+            <input type="number" id="packaging" placeholder="أدخل تكلفة التعبئة">
+        </div>
+        
+        <div class="form-group">
+            <label for="additionalExpenses">مصاريف إضافية (بالجنيه)</label>
+            <input type="number" id="additionalExpenses" placeholder="أدخل المصاريف الإضافية">
+        </div>
+        
+        <div class="form-group">
+            <label for="profitMargin">هامش الربح (%)</label>
+            <input type="number" id="profitMargin" placeholder="أدخل نسبة هامش الربح">
+        </div>
+        
+        <button onclick="calculatePricing()">احسب سعر التركيبة</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function calculatePricing() {
+            // جمع القيم من المدخلات
+            const rawMaterials = parseFloat(document.getElementById('rawMaterials').value) || 0;
+            const labor = parseFloat(document.getElementById('labor').value) || 0;
+            const packaging = parseFloat(document.getElementById('packaging').value) || 0;
+            const additionalExpenses = parseFloat(document.getElementById('additionalExpenses').value) || 0;
+            const profitMargin = parseFloat(document.getElementById('profitMargin').value) || 0;
+
+            // حساب التكلفة الإجمالية
+            const totalCost = rawMaterials + labor + packaging + additionalExpenses;
+            
+            // حساب سعر الوحدة
+            const unitCost = totalCost;
+            
+            // حساب سعر البيع مع هامش الربح
+            const sellingPrice = totalCost * (1 + (profitMargin / 100));
+
+            // عرض النتائج
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3>نتيجة التسعير</h3>
+                <p>التكلفة الإجمالية: ${totalCost.toFixed(2)} جنيه</p>
+                <p>تكلفة الوحدة: ${unitCost.toFixed(2)} جنيه</p>
+                <p>سعر البيع المقترح: ${sellingPrice.toFixed(2)} جنيه</p>
+            `;
+        }
+
+        // محاكاة طلب fetch (يمكن استبدالها بطلب حقيقي في المستقبل)
+        async function mockFetchPricing(data) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({
+                        status: 'success',
+                        data: data
+                    });
+                }, 500);
+            });
+        }
+    </script>
+</body>
+</html>
